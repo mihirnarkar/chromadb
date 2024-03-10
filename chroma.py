@@ -1,21 +1,36 @@
-import os
 import chromadb
+import psycopg2
+from psycopg2 import sql
+
 
 client = chromadb.Client()
 
-def read_files_from_folder(folder_path):
+def read_files_from_database():
     file_data = []
 
-    for file_name in os.listdir(folder_path):
-        if file_name.endswith(".txt"):
-            with open(os.path.join(folder_path, file_name), 'r') as file:
-                content = file.read()
-                file_data.append({"file_name": file_name, "content": content})
+    connection = psycopg2.connect(
+        host='localhost', port='5432',
+        user='postgres', password='root',
+        database='chromadb'
+    )
+
+    cursor = connection.cursor()
+
+    # Fetch data from the database
+    select_query = sql.SQL("SELECT * FROM uploads;")
+    cursor.execute(select_query)
+    rows = cursor.fetchall()
+
+    for row in rows:
+        file_data.append({"file_name": row[2], "content": row[1]})
+
+    # Close the connection
+    connection.close()
 
     return file_data
 
-folder_path = "D:\\chromadb\\uploads"
-file_data = read_files_from_folder(folder_path)
+
+file_data = read_files_from_database()
 
 
 documents = []
@@ -27,7 +42,7 @@ for index, data in enumerate(file_data):
     metadatas.append({'source': data['file_name']})
     ids.append(str(index + 1))
 
-collection = client.create_collection("mycollection")
+collection = client.create_collection("mycollection2")
 
 collection.add(
     documents=documents,
@@ -43,6 +58,12 @@ while(True):
     )
 
     print(f"Results : {results}")
+    print("")
+    print("")
+    print("")
+    print("")
+    print("")
+    print("")
 
 
 

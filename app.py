@@ -2,9 +2,18 @@ from flask import Flask, render_template, request, redirect, url_for
 from docx import Document
 import PyPDF2
 import os
-import time  # Import the time module
+import psycopg2
+from psycopg2 import sql
 
 app = Flask(__name__)
+
+# PostgreSQL database configuration
+DB_HOST = 'localhost'
+DB_PORT = '5432'
+DB_USER = 'postgres'
+DB_PASSWORD = 'root'
+DB_NAME = 'chromadb'
+TABLE_NAME = 'uploads'
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt'}
@@ -41,9 +50,41 @@ def convert_doc_to_txt(file_path):
     return text
 
 
+def store_in_database(file_content, file_name):
+    connection = psycopg2.connect(
+        host=DB_HOST, port=DB_PORT, user=DB_USER,
+        password=DB_PASSWORD, database=DB_NAME
+    )
+
+    cursor = connection.cursor()
+
+    # Create table if not exists
+    create_table_query = sql.SQL("""
+        CREATE TABLE IF NOT EXISTS {table} (
+            id SERIAL PRIMARY KEY,
+            content TEXT,
+            source VARCHAR(255)
+        );
+    """).format(table=sql.Identifier(TABLE_NAME))
+
+    cursor.execute(create_table_query)
+
+    # Insert data into the database
+    insert_query = sql.SQL("INSERT INTO {table} (content, source) VALUES ({}, {});").format(
+        sql.Literal(file_content), sql.Literal(file_name),
+        table=sql.Identifier(TABLE_NAME)
+    )
+
+    cursor.execute(insert_query)
+
+    # Commit changes and close the connection
+    connection.commit()
+    connection.close()
+
+
 @app.route('/')
 def index():
-    alert = request.args.get('alert')  # Get alert parameter from query string
+    alert = request.args.get('alert')  # Get alert parameter from the query string
     return render_template('index.html', alert=alert)
 
 
@@ -63,12 +104,8 @@ def upload():
             filename = os.path.join(upload_folder, file.filename)
             file.save(filename)
             txt_content = convert_to_txt(filename)
-            txt_filename = os.path.join(upload_folder, os.path.splitext(file.filename)[0] + '.txt')
-            with open(txt_filename, 'w', encoding='utf-8') as txt_file:
-                txt_file.write(txt_content)
-
-    # Add a small delay before redirecting
-    time.sleep(1)
+            txt_filename = os.path.splitext(file.filename)[0] + '.txt'
+            store_in_database(txt_content, txt_filename)
 
     return redirect(url_for('index', alert='Files uploaded and converted successfully!'))
 
