@@ -1,0 +1,320 @@
+Image Classification 
+
+
+Image Classification techniques are classified into two types :
+
+a) Supervised learning :- The algorithm trained on labeled datasets
+eg: Teaching a child by showing pictures of different animals and telling the names 
+
+Process :
+1) Define the Problem
+2) Collect and Prepare Data
+3) Collect and Prepare Data
+4) Choose a Model
+Split Data: Training and Testing
+6) Train the Model
+7) Evaluate the Model
+8) Fine-Tuning
+9) Make Predictions
+10) Monitor and Maintain
+
+
+b) Unsupervised learning :- The algorithm explores the data on its own identifying its own patterns and similarities
+
+eg : Giving a child a collection of pictures without labels and letting them group similar ones based on their own observation 
+
+Process :
+1) Define the Problem or Objective
+2) Collect and Prepare Data
+Data Preprocessing
+Choose an Unsupervised Learning Algorithm:  clustering algorithms (k-means, hierarchical clustering), dimensionality reduction techniques (PCA, t-SNE), and association rule learning.
+5) Train the Model
+Other process remains same
+
+
+
+For Image classification most commonly used algorithm is Convolutional Neural Networks (CNNs):
+
+
+
+
+
+Different models created by python for image classification
+1) VGG16 and VGG19:
+Use Cases:
+Ideal for recognizing general objects in images.
+Suitable for tasks like identifying everyday items, household objects, and common scenes.
+
+
+2) ResNet (Residual Networks)
+Use Cases:
+Excellent for recognizing detailed patterns in images.
+Effective for tasks where you need to identify complex structures or objects with intricate features.
+
+
+3) Inception (GoogLeNet)
+Use Cases:
+Well-suited for scenarios where objects may appear in different scales or orientations.
+Good for tasks like identifying objects in cluttered scenes or with varying perspectives.
+
+4) Xception
+Use Cases:
+Great for scenarios where you need a balance of accuracy and efficiency.
+Suitable for image classification on devices with limited computational resources.
+
+
+5) MobileNet
+Use Cases:
+Specifically designed for mobile and edge devices.
+Perfect for tasks like real-time image classification on your smartphone.
+
+6) DenseNet
+Use Cases:
+Useful for tasks requiring a comprehensive understanding of the relationships between different features.
+Effective for identifying objects in images with intricate interdependencies.
+
+7) EfficientNet
+Use Cases:
+Well-suited for situations where you want high accuracy without using too many resources.
+Appropriate for various image classification tasks, balancing accuracy and efficiency.
+
+
+
+8) ResNeXt
+Use Cases:
+Useful for tasks where you want to improve accuracy by capturing diverse patterns.
+Effective in scenarios where a combination of different viewpoints is crucial.
+
+9) SqueezeNet
+Use Cases:
+Designed for applications where you need a compact model with acceptable accuracy.
+Ideal for real-time image classification on devices with limited storage.
+
+
+10) NASNet (Neural Architecture Search Network)
+Use Cases:
+Well-suited for tasks where you want the model to automatically adapt its architecture.
+Useful for image classification in dynamic environments with evolving requirements.
+
+
+11) ShuffleNet
+Use Cases:
+Suitable for scenarios where computational resources are limited.
+Effective for image classification in applications where efficiency is a priority.
+
+
+12) Wide ResNet
+Use Cases:
+Ideal for tasks where you want to enhance model performance by increasing its width.
+Effective for image classification in situations requiring a broader understanding of features.
+
+
+
+Different types of algorithm used in image classification are as follows:
+
+1) Convolutional Nueral Network(CNN) : CNNs have become the go-to architecture for image classification tasks. They are designed to automatically and adaptively learn spatial hierarchies of features through convolutional layers. Popular CNN architectures include AlexNet, VGGNet, GoogLeNet (Inception), ResNet, and more. 
+
+
+
+2) Support Vector Machine(SVM) : SVM is a traditional machine learning algorithm that can be used for image classification. SVM finds the hyperplane that best separates different classes in feature space.
+
+3) K-Nearest Neighbours (K-NN) : K-NN is a simple algorithm that classifies an input by finding the majority class among its k nearest neighbors in the feature space. 
+
+4) Decision Trees and Random Forests : Decision trees split the input space into regions and assign a class label to each region. Random Forests, which consist of an ensemble of decision trees, are commonly used for image classification tasks.
+
+5) Naive Bayes : Naive Bayes is a probabilistic algorithm that is based on Bayes' theorem. Despite its simplicity, it can be effective for certain image classification tasks.
+
+6) Logistic Regression : Logistic regression models the probability that an instance belongs to a particular class. It can be used for binary classification tasks or extended to handle multiple classes.
+
+7) Extreme Learning Machines (ELM) : ELM is a type of neural network with a single hidden layer of randomly generated neurons. It is known for its fast training speed and simplicity. 
+
+8) Adaboost : Adaboost is an ensemble learning method that combines multiple weak classifiers to create a strong classifier. It can be used for image classification by combining the outputs of multiple classifiers.
+
+9) XGBoost : XGBoost is a gradient boosting algorithm that has gained popularity for its high performance and scalability. It can be applied to image classification tasks as well.
+
+10) Transfer Learning : While not a specific algorithm, transfer learning is a technique where a pre-trained model on a large dataset (such as ImageNet) is fine-tuned for a specific image classification task with a smaller dataset. This often leads to better performance.
+
+
+
+Time Complexity and Space Complexity 
+
+Time Complexity : The complexity is a measure of amount of time an algorithm takes to run with respect to its input size 
+
+Example: Linear Search
+Consider a simple linear search algorithm that looks for a specific element in a list. The time complexity of this algorithm is O(n), where 'n' is the size of the list.
+
+Code :
+def linear_search(lst, target):
+    for element in lst:
+        if element == target:
+            return True
+    return False
+
+In this example, the time complexity is O(n) because the time it takes to complete the search is directly proportional to the size of the input list 'lst'. If the list is twice as long, the algorithm will take roughly twice as long to complete.
+
+
+Space Complexity :  Space complexity is a measure of the amount of memory an algorithm uses with respect to its input size.
+
+Example: Sum of Elements
+
+Consider an algorithm that calculates the sum of elements in a list. The space complexity of this algorithm is O(1), constant space, because the amount of memory used doesn't depend on the size of the input.
+
+Code :
+def sum_of_elements(lst):
+    total = 0
+    for element in lst:
+        total += element
+    return total
+
+
+In this example, the space complexity is O(1) because the algorithm uses a constant amount of memory (the variable 'total') regardless of the size of the input list. Adding more elements to the list doesn't require more memory.
+
+
+
+
+
+Medical Documents :
+
+1) Medical Records/Patient Charts
+Insurance Claims and Billing Documents
+3) Prescription and Medication Records
+4) Consent Forms
+5) Medical Certificates
+6) Healthcare Policies and Procedures
+7) Medical Reports and Referral Letters
+8) HIPAA Compliance Documents
+9) Emergency Response Plans
+
+
+
+
+
+Code explanations :
+
+code 1: datagen = ImageDataGenerator(rescale=1./255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, validation_split=0.2)
+
+1) rescale=1./255 :- This means that the pixel values of the images will be scaled down by a factor of 1/255. It's a common practice to normalize pixel values to be in the range [0, 1].
+
+2) shear_range=0.2 :- It introduces shearing transformations, which slant the image along a certain axis.
+
+3) zoom_range=0.2 :- This allows random zooming in on the images by a factor of up to 0.2.
+
+4) horizontal_flip=True :-  It randomly flips images horizontally, which can augment the dataset and make the model more robust.
+
+5) validation_split=0.2 :-  This splits the dataset into training and validation sets, reserving 20% of the data for validation. This is useful for assessing the model's performance on data it hasn't seen during training.
+
+In simpler terms, this line of code is preparing a tool (ImageDataGenerator) to process and augment a collection of images for training a machine learning model, making the model more adaptable and effective.
+
+
+Code 2: train_generator = datagen.flow_from_directory(data_dir, target_size=(256, 256), batch_size=32, class_mode='categorical', subset='training')
+
+1) datagen :- This is the ImageDataGenerator you defined earlier, specifying how the training data should be augmented.
+
+2) .flow_from_directory(data_dir, target_size=(256, 256), batch_size=32, class_mode='categorical', subset='training') :- This function generates batches of augmented data from a directory. Let's look at each parameter:
+
+
+
+
+
+a) data_dir :- This is the path to the directory containing the training images
+
+b) target_size=(256, 256) :-  It resizes the images to have a height and width of 256 pixels.
+
+c) batch_size=32 :- It specifies that each batch of training data should contain 32 images.
+
+d) class_mode='categorical' :- This indicates that the labels for the images are categorical, meaning they represent different classes. This is common in classification tasks where each image belongs to a specific category.
+
+e) subset='training' :- It tells the generator to use the subset of the data designated for training. This is related to the validation split you specified in the ImageDataGenerator, where 20% of the data was reserved for validation, and the remaining 80% is used for training
+
+In summary, this line of code is creating a generator specifically for the training data. It takes images from a specified directory, applies the data augmentation transformations defined in datagen, and organizes the data into batches for training a machine learning model.
+
+
+
+Code 3 : val_generator = datagen.flow_from_directory(data_dir_test, target_size=(256, 256), batch_size=32, class_mode='categorical', subset='validation')
+
+1) datagen :- This is the same ImageDataGenerator defined earlier, specifying how the validation data should be processed.
+
+2) .flow_from_directory(data_dir_test, target_size=(256, 256), batch_size=32, class_mode='categorical', subset='validation') :- This function is similar to the one used for training data. Let's look at each parameter
+
+a) data_dir_test : - This is the path to the directory containing the validation images. It's a separate directory from the one used for training data.
+
+b) target_size=(256, 256) :-  It resizes the validation images to have a height and width of 256 pixels. This should match the target size used for training data.
+
+c) batch_size=32 :- It specifies that each batch of validation data should contain 32 images. This should be consistent with the batch size used for training data.
+
+d) class_mode='categorical’ :- This indicates that, like in training, the labels for the validation images are categorical, representing different classes.
+
+e)  subset='validation' : It tells the generator to use the subset of the data designated for validation. This is related to the validation split specified in the ImageDataGenerator during training.
+
+
+In summary, this line of code is creating a generator specifically for the validation data. It takes images from a different directory, applies the same data augmentation transformations defined in datagen, and organizes the data into batches for evaluating the model's performance on unseen data.
+
+
+
+Batch Size : The batch size is a hyperparameter that determines the number of samples processed in each iteration during training. It can affect both the training speed and memory usage. Choosing an appropriate batch size depends on various factors, including the available computational resources, the size of your dataset, and the architecture of your neural network. There's no one-size-fits-all answer, and it often involves some experimentation.
+
+Here are some considerations:
+1) Larger Batch Size:
+Pros: Generally speeds up training as more samples are processed in parallel.
+Cons: Requires more memory; might not fit on GPUs with limited memory.
+
+2) Smaller Batch Size:
+Pros: Requires less memory; may converge faster and generalize better in some cases.
+Cons: Slower training due to fewer samples processed in parallel.
+
+
+
+Code 4 : 
+model = Sequential()
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(len(class_names1), activation='softmax'))
+
+1) model = Sequential() :  This initializes a sequential model, which is a linear stack of layers. In a sequential model, you can add one layer at a time in a step-by-step fashion.
+
+2) model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 3))) : 
+Adds a convolutional layer with 32 filters of size (3, 3).
+Uses the ReLU (Rectified Linear Unit) activation function, which introduces non-linearity.
+input_shape=(256, 256, 3) specifies that the input should have a shape of (256, 256, 3), where 3 is for the RGB color channels.
+
+
+3) model.add(MaxPooling2D(pool_size=(2, 2))) :-  Adds a max-pooling layer with a pool size of (2, 2). Max-pooling reduces the spatial dimensions of the data.
+
+4) model.add(Conv2D(64, (3, 3), activation='relu')) :- Adds another convolutional layer with 64 filters of size (3, 3). Again, uses the ReLU activation function
+
+5) model.add(MaxPooling2D(pool_size=(2, 2))) :- Adds another max-pooling layer with a pool size of (2, 2).
+
+6) model.add(Flatten()) : Adds a flatten layer, which converts the multi-dimensional output to a one-dimensional array. This is necessary before feeding the data into dense layers
+
+7) model.add(Dense(128, activation='relu')) : Adds a fully connected (dense) layer with 128 neurons. Uses the ReLU activation function.
+
+8) model.add(Dropout(0.5)) :- Adds a dropout layer with a dropout rate of 0.5. Dropout is a regularization technique that helps prevent overfitting by randomly setting a fraction of input units to zero during training
+
+9) model.add(Dense(len(class_names1), activation='softmax')) :- Adds the final fully connected (dense) layer with a number of neurons equal to the number of classes in your dataset (len(class_names1)). Uses the softmax activation function, which is common for multi-class classification problems. It converts the model's raw output into class probabilities.
+
+In summary, this code defines a CNN architecture with convolutional and pooling layers, followed by fully connected layers for image classification. The ReLU activation function introduces non-linearity, and dropout helps prevent overfitting. The final layer uses softmax activation for multi-class classification.
+
+
+Sequential : A Sequential model in Keras is a linear stack of layers where you can add one layer at a time. It represents a simple and straightforward neural network architecture, where each layer flows sequentially from the previous one. This type of model is appropriate for most common use cases, such as feedforward neural networks and simple convolutional neural networks (CNNs).
+
+
+In summary, your model processes input images through convolutional and pooling layers to extract features, flattens the output, passes it through fully connected layers, and produces class probabilities at the output layer using the softmax activation function. The class with the highest probability is considered the predicted class during inference.
+
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+a) model.compile is a method in Keras that configures the model for training.
+b) It takes several important parameters:
+optimizer='adam': This specifies the optimization algorithm to use during training. 'adam' is a popular optimization algorithm that adapts the learning rate during training.
+
+b) loss='categorical_crossentropy': This is the loss function that the model will minimize during training. For multi-class classification problems with one-hot encoded labels, 'categorical_crossentropy' is commonly used.
+
+c) metrics=['accuracy']: This defines the evaluation metric(s) used to monitor the training and validation performance. In this case, it's tracking the accuracy of the model.
+
+
+
+
