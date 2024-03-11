@@ -23,6 +23,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 client = chromadb.Client()
 
+collection_index = 0
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -140,6 +142,7 @@ def upload():
 
 @app.route('/submit', methods=['GET'])
 def submit():
+    global collection_index  # Declare the variable as global
     user_query = request.args.get('query')
 
     # Perform the query and get the results from ChromaDB
@@ -149,12 +152,18 @@ def submit():
 
     file_data = read_files_from_database()
 
+    collection_index += 1
+
     for index, data in enumerate(file_data):
         documents.append(data['content'])
         metadatas.append({'source': data['file_name']})
         ids.append(str(index + 1))
 
-    collection = client.create_collection("mycollection2")
+    collection_name = f"mycollection{collection_index}"
+
+    collection = client.create_collection(collection_name)
+
+    # collection = client.create_collection(f"mycollection{collection_index}")
 
     collection.add(
         documents=documents,
