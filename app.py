@@ -4,6 +4,7 @@ import PyPDF2
 import os
 import psycopg2
 from psycopg2 import sql
+import chromadb
 
 app = Flask(__name__)
 
@@ -19,6 +20,8 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+client = chromadb.Client()
 
 
 def allowed_file(filename):
@@ -82,6 +85,31 @@ def store_in_database(file_content, file_name):
     connection.close()
 
 
+def read_files_from_database():
+    file_data = []
+
+    connection = psycopg2.connect(
+        host='localhost', port='5432',
+        user='postgres', password='root',
+        database='chromadb'
+    )
+
+    cursor = connection.cursor()
+
+    # Fetch data from the database
+    select_query = sql.SQL("SELECT * FROM uploads;")
+    cursor.execute(select_query)
+    rows = cursor.fetchall()
+
+    for row in rows:
+        file_data.append({"file_name": row[2], "content": row[1]})
+
+    # Close the connection
+    connection.close()
+
+    return file_data
+
+
 @app.route('/')
 def index():
     alert = request.args.get('alert')  # Get alert parameter from the query string
@@ -108,6 +136,38 @@ def upload():
             store_in_database(txt_content, txt_filename)
 
     return redirect(url_for('index', alert='Files uploaded and converted successfully!'))
+
+
+@app.route('/submit', methods=['GET'])
+def submit():
+    user_query = request.args.get('query')
+
+    # Perform the query and get the results from ChromaDB
+    documents = []
+    metadatas = []
+    ids = []
+
+    file_data = read_files_from_database()
+
+    for index, data in enumerate(file_data):
+        documents.append(data['content'])
+        metadatas.append({'source': data['file_name']})
+        ids.append(str(index + 1))
+
+    collection = client.create_collection("mycollection2")
+
+    collection.add(
+        documents=documents,
+        metadatas=metadatas,
+        ids=ids
+    )
+
+    results = collection.query(
+        query_texts=[user_query],
+        n_results=2
+    )
+
+    return f"Results: {results}"
 
 
 if __name__ == '__main__':

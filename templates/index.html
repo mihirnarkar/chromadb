@@ -76,7 +76,7 @@
             <input type="text" class="form-control" id="query" name="query">
         </div>
 
-        <button class="btn btn-primary mt-3" id="submitBtn">Submit</button>
+        <button class="btn btn-primary mt-3" id="submitBtn" onclick="submitQuery()">Submit</button>
     </div>
 
     <!-- Bootstrap JS and Popper.js CDN -->
@@ -96,7 +96,28 @@
                 selectedFilesContainer.appendChild(fileListItem);
             }
         }
+
+        function submitQuery() {
+            const userQuery = document.getElementById('query').value;
+
+            // Assuming jQuery is available
+            $.ajax({
+                type: "GET",
+                url: "/submit",
+                data: { query: userQuery },
+                success: function (response) {
+                    console.log(response);
+                    // Handle the response as needed
+                },
+                error: function (error) {
+                    console.error(error);
+                    // Handle errors if any
+                }
+            });
+        }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Add your scripts or additional styling here if needed -->
 
